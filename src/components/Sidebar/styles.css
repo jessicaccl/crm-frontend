@@ -1,0 +1,95 @@
+.sidebar {
+  background-color: #111827;
+  color: #9ca3af;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  border-right: 1px solid #1f2937;
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  height: 100vh; 
+}
+
+.sidebarOpen {
+  width: 260px;
+}
+
+.sidebarClosed {
+  width: 80px;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: 2rem;
+  overflow: hidden;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  font-weight: 500;
+  height: 45px;
+}
+
+.navItem:hover {
+  background-color: #1f2937;
+  color: #f3f4f6;
+}
+
+.navItemActive {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+.toggleBtn {
+  position: absolute;
+  top: 1.5rem;
+  right: -12px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.toggleBtn:hover {
+  background-color: #1d4ed8;
+}
+
+.sidebarClosed .navText, 
+.sidebarClosed .logoText {
+  display: none;
+}
+
+.sidebarClosed .toggleBtn {
+  right: 28px;
+}
