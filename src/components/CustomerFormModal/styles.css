@@ -20,8 +20,15 @@
   font-weight: 600;
 }
 
+.formField textarea {
+  resize: vertical;
+  min-height: 72px;
+  line-height: 1.5;
+}
+
 .formField input,
-.formField select {
+.formField select,
+.formField textarea {
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 0.6rem 0.75rem;
@@ -31,7 +38,8 @@
 }
 
 .formField input:focus,
-.formField select:focus {
+.formField select:focus,
+.formField textarea:focus {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--primary-soft);

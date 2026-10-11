@@ -6,6 +6,7 @@ import { Customers } from './pages/Customers';
 import { Pipeline } from './pages/Pipeline';
 import { Login } from './pages/Login';
 import { Settings } from './pages/Settings';
+import { Integrations } from './pages/Integrations';
 import { ComingSoon } from './pages/ComingSoon';
 import './App.css';
 
@@ -42,7 +43,7 @@ function App() {
           element={
             <ComingSoon
               title="Painel de resultados"
-              phase={4}
+              phase={5}
               items={[
                 'Receita ganha por mês',
                 'Conversão por etapa e origem dos negócios',
@@ -56,25 +57,12 @@ function App() {
           element={
             <ComingSoon
               title="Tarefas"
-              phase={5}
+              phase={6}
               items={['Follow-ups com data e responsável', 'Lembretes de negócios parados']}
             />
           }
         />
-        <Route
-          path="/integracoes"
-          element={
-            <ComingSoon
-              title="Integrações"
-              phase={5}
-              items={[
-                'Webhooks quando um negócio muda de etapa ou é ganho',
-                'Entrada de leads por API com chave de acesso',
-                'Exemplos com n8n, WhatsApp e Telegram',
-              ]}
-            />
-          }
-        />
+        <Route path="/integracoes" element={<Integrations />} />
         <Route path="/configuracoes" element={<Settings />} />
         <Route path="*" element={<Navigate to="/funil" replace />} />
       </Route>

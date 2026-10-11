@@ -3,6 +3,7 @@ import type { Page, ProblemDetail } from '../types/api';
 import type { Customer, CustomerFilters, CustomerInput } from '../types/customer';
 import type { Deal, DealInput, DealStage, SummaryReport } from '../types/deal';
 import type { LoginResponse } from '../types/auth';
+import type { InboundLead, IntegrationStatus } from '../types/integration';
 import { getToken, SESSION_EXPIRED_EVENT } from './session';
 
 const api = axios.create({
@@ -47,6 +48,14 @@ export const dealsApi = {
     api.patch<Deal>(`/deals/${id}/stage`, { stage, lostReason }).then((res) => res.data),
   remove: (id: number) => api.delete(`/deals/${id}`),
 };
+
+export const integrationsApi = {
+  status: () => api.get<IntegrationStatus>('/integrations/status').then((res) => res.data),
+  recentLeads: () => api.get<InboundLead[]>('/integrations/leads').then((res) => res.data),
+};
+
+/** Endereço público da API, sem o /api/v1 (ex.: para montar a URL do webhook). */
+export const API_ORIGIN = (import.meta.env.VITE_API_URL ?? 'http://localhost:8080/api/v1').replace(/\/api\/v1\/?$/, '');
 
 export const reportsApi = {
   summary: () => api.get<SummaryReport>('/reports/summary').then((res) => res.data),

@@ -4,7 +4,7 @@ import { Kanban, LoaderCircle, LogIn, Plug, TrendingUp } from 'lucide-react';
 import { Button } from '../../components/Button';
 import { useAuth } from '../../context/auth-context';
 import { getErrorMessage, getProblem } from '../../services/api';
-import { DEMO_CREDENTIALS } from '../../types/auth';
+import { DEMO_CREDENTIALS, IS_DEMO } from '../../types/auth';
 import './styles.css';
 
 // No plano gratuito do Render a API "dorme"; o primeiro acesso pode levar até ~1 minuto
@@ -88,7 +88,9 @@ export const Login = () => {
       <main className="loginMain">
         <div className="loginCard">
           <h2>Entrar</h2>
-          <p className="loginHint">Use sua conta ou explore com o usuário de demonstração.</p>
+          <p className="loginHint">
+            {IS_DEMO ? 'Use sua conta ou explore com o usuário de demonstração.' : 'Entre com sua conta.'}
+          </p>
 
           <form id={formId} className="loginForm" onSubmit={onSubmit} noValidate>
             <label htmlFor={`${formId}-email`}>E-mail</label>
@@ -127,17 +129,19 @@ export const Login = () => {
             </p>
           )}
 
-          <div className="demoBox">
-            <div>
-              <strong>Acesso de demonstração</strong>
-              <span>
-                {DEMO_CREDENTIALS.email} · {DEMO_CREDENTIALS.password}
-              </span>
+          {IS_DEMO && (
+            <div className="demoBox">
+              <div>
+                <strong>Acesso de demonstração</strong>
+                <span>
+                  {DEMO_CREDENTIALS.email} · {DEMO_CREDENTIALS.password}
+                </span>
+              </div>
+              <Button variant="secondary" onClick={enterAsDemo} disabled={isLoading}>
+                Entrar como demo
+              </Button>
             </div>
-            <Button variant="secondary" onClick={enterAsDemo} disabled={isLoading}>
-              Entrar como demo
-            </Button>
-          </div>
+          )}
         </div>
       </main>
     </div>

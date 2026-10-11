@@ -9,6 +9,7 @@ export interface Deal {
   source: DealSource | null;
   expectedCloseDate: string | null;
   lostReason: string | null;
+  notes: string | null;
   customer: { id: number; name: string; company: string | null };
   stageChangedAt: string;
   closedAt: string | null;
@@ -24,6 +25,7 @@ export interface DealInput {
   source: DealSource | null;
   expectedCloseDate: string | null;
   lostReason: string | null;
+  notes: string | null;
 }
 
 export interface SummaryReport {
