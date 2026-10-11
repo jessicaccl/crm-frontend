@@ -2,10 +2,32 @@ import axios, { isAxiosError } from 'axios';
 import type { Page, ProblemDetail } from '../types/api';
 import type { Customer, CustomerFilters, CustomerInput } from '../types/customer';
 import type { Deal, DealInput, DealStage, SummaryReport } from '../types/deal';
+import type { LoginResponse } from '../types/auth';
+import { getToken, SESSION_EXPIRED_EVENT } from './session';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL ?? 'http://localhost:8080/api/v1',
 });
+
+// Envia o token em toda requisição
+api.interceptors.request.use((config) => {
+  const token = getToken();
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+// 401 fora do login = sessão expirada: avisa o AuthProvider para voltar à tela de login
+api.interceptors.response.use(undefined, (error) => {
+  if (isAxiosError(error) && error.response?.status === 401 && !error.config?.url?.includes('/auth/login')) {
+    window.dispatchEvent(new Event(SESSION_EXPIRED_EVENT));
+  }
+  return Promise.reject(error);
+});
+
+export const authApi = {
+  login: (email: string, password: string) =>
+    api.post<LoginResponse>('/auth/login', { email, password }).then((res) => res.data),
+};
 
 export const customersApi = {
   list: (filters: CustomerFilters) =>
