@@ -1,0 +1,109 @@
+.pipelineActions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.pipelineActions .searchBox {
+  flex: 1 1 240px;
+  min-width: 220px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(210px, 1fr));
+  gap: 0.75rem;
+  align-items: start;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+.stageColumn {
+  background: #e9edf3;
+  border-radius: 10px;
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 220px;
+  transition: background-color 0.15s, box-shadow 0.15s;
+}
+
+.stageColumn.isOver {
+  background: #dfe9fc;
+  box-shadow: inset 0 0 0 2px var(--primary);
+}
+
+.stageColumn--loading {
+  background: linear-gradient(90deg, #e9edf3 25%, #f4f6f9 50%, #e9edf3 75%);
+  background-size: 200% 100%;
+  animation: skeleton 1.2s ease-in-out infinite;
+  min-height: 320px;
+}
+
+.stageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.1rem 0.25rem 0;
+}
+
+.stageHeader h2 {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.stageHeader span {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.stageBar {
+  height: 3px;
+  border-radius: 2px;
+  margin: 0 0.25rem 0.15rem;
+}
+
+.stageColumn--PROSPECT .stageBar { background: #60a5fa; }
+.stageColumn--QUALIFIED .stageBar { background: #f59e0b; }
+.stageColumn--PROPOSAL .stageBar { background: #f97316; }
+.stageColumn--WON .stageBar { background: #22c55e; }
+.stageColumn--LOST .stageBar { background: #ef4444; }
+
+.stageCards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stageEmpty {
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 1.25rem 0.5rem;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.stageAdd {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.4rem 0.35rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.stageAdd:hover {
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--text-main);
+}
