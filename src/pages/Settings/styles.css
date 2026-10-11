@@ -1,0 +1,62 @@
+.settingsCard {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9rem;
+  max-width: 620px;
+}
+
+.settingsCard h2 {
+  font-size: 1.05rem;
+}
+
+.settingsList {
+  display: grid;
+  gap: 0.5rem;
+  width: 100%;
+  font-size: 0.92rem;
+}
+
+.settingsList div {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 1rem;
+}
+
+.settingsList dt {
+  color: var(--text-secondary);
+}
+
+.settingsList dd {
+  overflow-wrap: anywhere;
+}
+
+.settingsNote {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.settingsLinks {
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.92rem;
+}
+
+.settingsLinks a {
+  color: var(--primary-hover);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.settingsLinks a:hover {
+  text-decoration: underline;
+}

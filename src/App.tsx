@@ -1,23 +1,39 @@
 import { useState } from 'react';
-import { Navigate, Route, Routes } from 'react-router';
+import { Navigate, Outlet, Route, Routes } from 'react-router';
 import { Sidebar } from './components/Sidebar';
+import { RequireAuth } from './components/RequireAuth';
 import { Customers } from './pages/Customers';
 import { Pipeline } from './pages/Pipeline';
+import { Login } from './pages/Login';
+import { Settings } from './pages/Settings';
 import { ComingSoon } from './pages/ComingSoon';
 import './App.css';
 
-function App() {
+/** Estrutura das telas internas: menu lateral + conteúdo. */
+const AppLayout = () => {
   // Em telas pequenas a sidebar começa recolhida
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => window.innerWidth >= 900);
 
   return (
     <div className="layout">
-      <Sidebar
-        isOpen={isSidebarOpen}
-        toggle={() => setIsSidebarOpen(!isSidebarOpen)}
-      />
+      <Sidebar isOpen={isSidebarOpen} toggle={() => setIsSidebarOpen(!isSidebarOpen)} />
+      <Outlet />
+    </div>
+  );
+};
 
-      <Routes>
+function App() {
+  return (
+    <Routes>
+      <Route path="/login" element={<Login />} />
+
+      <Route
+        element={
+          <RequireAuth>
+            <AppLayout />
+          </RequireAuth>
+        }
+      >
         <Route path="/" element={<Navigate to="/funil" replace />} />
         <Route path="/funil" element={<Pipeline />} />
         <Route path="/clientes" element={<Customers />} />
@@ -59,19 +75,10 @@ function App() {
             />
           }
         />
-        <Route
-          path="/configuracoes"
-          element={
-            <ComingSoon
-              title="Configurações"
-              phase={3}
-              items={['Login e usuários', 'Preferências da conta']}
-            />
-          }
-        />
+        <Route path="/configuracoes" element={<Settings />} />
         <Route path="*" element={<Navigate to="/funil" replace />} />
-      </Routes>
-    </div>
+      </Route>
+    </Routes>
   );
 }
 

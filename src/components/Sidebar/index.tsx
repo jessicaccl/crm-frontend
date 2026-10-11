@@ -8,8 +8,10 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  LogOut,
   type LucideIcon,
 } from 'lucide-react';
+import { useAuth } from '../../context/auth-context';
 import './styles.css';
 
 interface SidebarProps {
@@ -36,6 +38,8 @@ const secondaryItems: NavItem[] = [
 ];
 
 export const Sidebar = ({ isOpen, toggle }: SidebarProps) => {
+  const { user, logout } = useAuth();
+
   const renderItem = ({ to, label, icon: Icon }: NavItem) => (
     <NavLink
       key={to}
@@ -68,6 +72,21 @@ export const Sidebar = ({ isOpen, toggle }: SidebarProps) => {
         <div className="navSeparator" />
         {secondaryItems.map(renderItem)}
       </nav>
+
+      {user && (
+        <div className="sidebarUser">
+          <span className="userAvatar" aria-hidden="true">
+            {user.name.charAt(0).toUpperCase()}
+          </span>
+          <div className="userInfo">
+            <span className="userName">{user.name}</span>
+            <span className="userEmail">{user.email}</span>
+          </div>
+          <button className="logoutBtn" onClick={logout} aria-label="Sair" title="Sair">
+            <LogOut size={18} />
+          </button>
+        </div>
+      )}
     </aside>
   );
 };

@@ -12,7 +12,7 @@
 
 .board {
   display: grid;
-  grid-template-columns: repeat(5, minmax(210px, 1fr));
+  grid-template-columns: repeat(5, minmax(190px, 1fr));
   gap: 0.75rem;
   align-items: start;
   overflow-x: auto;
