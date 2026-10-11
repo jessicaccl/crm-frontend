@@ -1,6 +1,7 @@
 import axios, { isAxiosError } from 'axios';
 import type { Page, ProblemDetail } from '../types/api';
 import type { Customer, CustomerFilters, CustomerInput } from '../types/customer';
+import type { Deal, DealInput, DealStage, SummaryReport } from '../types/deal';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL ?? 'http://localhost:8080/api/v1',
@@ -14,6 +15,19 @@ export const customersApi = {
   update: (id: number, data: CustomerInput) =>
     api.put<Customer>(`/customers/${id}`, data).then((res) => res.data),
   remove: (id: number) => api.delete(`/customers/${id}`),
+};
+
+export const dealsApi = {
+  list: () => api.get<Deal[]>('/deals').then((res) => res.data),
+  create: (data: DealInput) => api.post<Deal>('/deals', data).then((res) => res.data),
+  update: (id: number, data: DealInput) => api.put<Deal>(`/deals/${id}`, data).then((res) => res.data),
+  changeStage: (id: number, stage: DealStage, lostReason?: string) =>
+    api.patch<Deal>(`/deals/${id}/stage`, { stage, lostReason }).then((res) => res.data),
+  remove: (id: number) => api.delete(`/deals/${id}`),
+};
+
+export const reportsApi = {
+  summary: () => api.get<SummaryReport>('/reports/summary').then((res) => res.data),
 };
 
 export function getProblem(error: unknown): ProblemDetail | null {

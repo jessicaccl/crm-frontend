@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import { Sidebar } from './components/Sidebar';
 import { Customers } from './pages/Customers';
+import { Pipeline } from './pages/Pipeline';
 import { ComingSoon } from './pages/ComingSoon';
 import './App.css';
 
@@ -17,22 +18,9 @@ function App() {
       />
 
       <Routes>
-        <Route path="/" element={<Navigate to="/clientes" replace />} />
+        <Route path="/" element={<Navigate to="/funil" replace />} />
+        <Route path="/funil" element={<Pipeline />} />
         <Route path="/clientes" element={<Customers />} />
-        <Route
-          path="/funil"
-          element={
-            <ComingSoon
-              title="Funil de vendas"
-              phase={2}
-              items={[
-                'Negócios com valor, etapa, origem e previsão de fechamento',
-                'Kanban com arrastar e soltar entre etapas',
-                'Indicadores no topo: em aberto, ganho no mês, conversão e parados',
-              ]}
-            />
-          }
-        />
         <Route
           path="/painel"
           element={
@@ -81,7 +69,7 @@ function App() {
             />
           }
         />
-        <Route path="*" element={<Navigate to="/clientes" replace />} />
+        <Route path="*" element={<Navigate to="/funil" replace />} />
       </Routes>
     </div>
   );

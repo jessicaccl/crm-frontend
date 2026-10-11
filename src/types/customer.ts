@@ -24,6 +24,7 @@ export interface CustomerFilters {
   status?: CustomerStatus;
   page?: number;
   size?: number;
+  sort?: string;
 }
 
 export const statusLabels: Record<CustomerStatus, string> = {
