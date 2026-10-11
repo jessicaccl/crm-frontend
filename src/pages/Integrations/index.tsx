@@ -5,6 +5,7 @@ import { Copy, FileInput, Inbox, KeyRound, LoaderCircle, RefreshCw } from 'lucid
 import { toast } from 'sonner';
 import { Button } from '../../components/Button';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
+import { CsvImportCard } from '../../components/CsvImportCard';
 import { useAuth } from '../../context/auth-context';
 import { API_ORIGIN, getErrorMessage, integrationsApi } from '../../services/api';
 import '../Customers/styles.css';
@@ -133,6 +134,8 @@ export const Integrations = () => {
         )}
       </section>
 
+      <CsvImportCard />
+
       <section className="integrationCard">
         <div className="leadsHeader">
           <h2>Últimos leads recebidos</h2>
@@ -159,7 +162,7 @@ export const Integrations = () => {
                   <th>Recebido em</th>
                   <th>Contato</th>
                   <th>Negócio criado</th>
-                  <th>Formulário</th>
+                  <th>Origem</th>
                 </tr>
               </thead>
               <tbody>
