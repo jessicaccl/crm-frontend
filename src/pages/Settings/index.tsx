@@ -33,6 +33,10 @@ export const Settings = () => {
             <dd>{user?.email}</dd>
           </div>
           <div>
+            <dt>Empresa</dt>
+            <dd>{user?.organization?.name ?? '—'}</dd>
+          </div>
+          <div>
             <dt>Perfil</dt>
             <dd>{user ? roleLabels[user.role] : ''}</dd>
           </div>

@@ -99,8 +99,31 @@
 }
 
 .webhookHint {
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   color: var(--text-secondary);
+  flex: 1;
+  min-width: 200px;
+}
+
+.webhookLabel + .webhookRow,
+.webhookRow + .webhookLabel,
+.webhookWarning + .webhookLabel {
+  margin-top: 0.15rem;
+}
+
+.webhookBox .webhookLabel:not(:first-child) {
+  margin-top: 0.6rem;
+}
+
+.secretValue {
+  background: #fffbeb !important;
+  border-color: #fcd34d !important;
+}
+
+.webhookWarning {
+  font-size: 0.8rem;
+  color: #92400e;
+  font-weight: 500;
 }
 
 .leadsHeader {
