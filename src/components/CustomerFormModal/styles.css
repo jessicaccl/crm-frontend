@@ -1,0 +1,57 @@
+.customerForm {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.formField--full {
+  grid-column: 1 / -1;
+}
+
+.formField label {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.formField input,
+.formField select {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  background: var(--surface);
+  font-size: 0.92rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.formField input:focus,
+.formField select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+.formField input[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+
+.formField input[aria-invalid='true']:focus {
+  box-shadow: 0 0 0 3px var(--danger-soft);
+}
+
+.fieldError {
+  font-size: 0.78rem;
+  color: #b91c1c;
+}
+
+@media (max-width: 520px) {
+  .customerForm {
+    grid-template-columns: 1fr;
+  }
+}

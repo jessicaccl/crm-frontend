@@ -1,0 +1,178 @@
+.container {
+  flex: 1;
+  min-width: 0;
+  padding: 2.25rem 2.5rem;
+  overflow-y: auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.pageHeader h1 {
+  font-size: 1.75rem;
+  color: #111827;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.pageSubtitle {
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+  font-size: 0.93rem;
+}
+
+.toolbar {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.searchBox {
+  flex: 1 1 280px;
+  max-width: 420px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0 0.75rem;
+  color: var(--text-secondary);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.searchBox:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+.searchBox input {
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0.6rem 0;
+  width: 100%;
+  color: var(--text-main);
+  font-size: 0.92rem;
+}
+
+.segmented {
+  display: inline-flex;
+  background: #e8ecf2;
+  border-radius: 9px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.segmented button {
+  border: none;
+  background: transparent;
+  padding: 0.45rem 0.85rem;
+  border-radius: 7px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.segmented button:hover {
+  color: var(--text-main);
+}
+
+.segmented button.active {
+  background: var(--surface);
+  color: var(--text-main);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+.customerGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(290px, 100%), 1fr));
+  gap: 1rem;
+  transition: opacity 0.2s;
+}
+
+.customerGrid.isRefreshing {
+  opacity: 0.6;
+}
+
+.skeletonCard {
+  height: 172px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #e9edf3 25%, #f4f6f9 50%, #e9edf3 75%);
+  background-size: 200% 100%;
+  animation: skeleton 1.2s ease-in-out infinite;
+}
+
+@keyframes skeleton {
+  to { background-position: -200% 0; }
+}
+
+.stateBox {
+  background: var(--surface);
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 3rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.6rem;
+  color: var(--text-secondary);
+}
+
+.stateBox h2 {
+  font-size: 1.1rem;
+  color: var(--text-main);
+}
+
+.stateBox p {
+  max-width: 380px;
+  font-size: 0.92rem;
+  margin-bottom: 0.5rem;
+}
+
+.stateBox--error {
+  border-style: solid;
+  border-color: #fecaca;
+}
+
+.stateBox--error > svg {
+  color: var(--danger);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  padding-bottom: 1rem;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 1.5rem 1rem 1.5rem 1.5rem;
+  }
+
+  .segmented {
+    width: 100%;
+  }
+
+  .segmented button {
+    flex: 1;
+    padding-inline: 0.4rem;
+  }
+}

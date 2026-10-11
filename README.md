@@ -1,73 +1,45 @@
-# React + TypeScript + Vite
+# CRM Pro · Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interface do CRM de vendas: clientes, funil Kanban, painel de resultados e integrações.
+API em [crm-vendas-backend](https://github.com/jessicaccl/crm-vendas-backend).
 
-Currently, two official plugins are available:
+**Stack:** React 19 · TypeScript · Vite · React Router · TanStack Query · React Hook Form + Zod · Sonner · Lucide
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Como rodar
 
-## React Compiler
+Com a API rodando em `http://localhost:8080`:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+cp .env.example .env.local   # opcional: só se a API estiver em outro endereço
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Abra http://localhost:5173.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## O que já funciona
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Lista de clientes com busca, filtro por status (Lead, Cliente, Inativo) e paginação
+- Cadastro e edição em modal, com validação no navegador e mensagens de erro vindas da API
+- Exclusão com confirmação
+- Estados de carregando, erro e lista vazia
+- Menu lateral recolhível e layout que funciona no celular
+
+## Estrutura
+
 ```
+src/
+  components/   Button, Modal, Sidebar, CustomerCard, CustomerFormModal, ConfirmDialog, StatusBadge
+  pages/        Customers e páginas das próximas fases
+  hooks/        useCustomers (TanStack Query), useDebouncedValue
+  services/     cliente HTTP (axios) e leitura de erros da API
+  types/        tipos compartilhados com o contrato da API
+```
+
+## Roteiro
+
+- [x] Fase 1: base (rotas, CRUD de clientes, validação, estados de tela)
+- [ ] Fase 2: funil Kanban com arrastar e soltar e indicadores
+- [ ] Fase 3: login, testes e demo online
+- [ ] Fase 4: painel de resultados com gráficos
+- [ ] Fase 5: ficha do cliente com atividades, tarefas e integrações
