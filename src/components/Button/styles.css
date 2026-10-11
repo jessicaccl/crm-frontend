@@ -1,27 +1,74 @@
-.button { 
-  padding: 0.6rem 1.2rem;
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   border-radius: 8px;
-  border: none;
+  border: 1px solid transparent;
   font-weight: 600;
   cursor: pointer;
-  transition: filter 0.2s;
+  white-space: nowrap;
+  transition: background-color 0.15s, filter 0.15s, color 0.15s;
 }
 
-.button:hover {
-  filter: brightness(0.9);
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-.primary {
-  background-color: #3b82f6;
-  color: white;
+.btn--md {
+  padding: 0.6rem 1.1rem;
+  font-size: 0.9rem;
 }
 
-.secondary {
-  background-color: #e2e8f0;
-  color: #1e293b;
+.btn--icon {
+  width: 34px;
+  height: 34px;
+  padding: 0;
 }
 
-.danger {
-  background-color: #ef4444;
-  color: white;
+.btn--primary {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+.btn--primary:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+}
+
+.btn--secondary {
+  background-color: var(--surface);
+  border-color: var(--border-color);
+  color: var(--text-main);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background-color: #f8fafc;
+}
+
+.btn--danger {
+  background-color: var(--danger);
+  color: #ffffff;
+}
+
+.btn--danger:hover:not(:disabled) {
+  filter: brightness(0.92);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background-color: #f1f5f9;
+  color: var(--text-main);
+}
+
+.btn .spin {
+  animation: btn-spin 0.8s linear infinite;
+}
+
+@keyframes btn-spin {
+  to { transform: rotate(360deg); }
 }
