@@ -1,9 +1,9 @@
 import axios, { isAxiosError } from 'axios';
 import type { Page, ProblemDetail } from '../types/api';
 import type { Customer, CustomerFilters, CustomerInput } from '../types/customer';
-import type { Deal, DealInput, DealStage, SummaryReport } from '../types/deal';
+import type { Deal, DealInput, DealSource, DealStage, SummaryReport } from '../types/deal';
 import type { LoginResponse } from '../types/auth';
-import type { InboundLead, IntegrationStatus } from '../types/integration';
+import type { CsvImportResult, InboundLead, IntegrationStatus } from '../types/integration';
 import { getToken, SESSION_EXPIRED_EVENT } from './session';
 
 const api = axios.create({
@@ -52,6 +52,13 @@ export const dealsApi = {
 export const integrationsApi = {
   status: () => api.get<IntegrationStatus>('/integrations/status').then((res) => res.data),
   recentLeads: () => api.get<InboundLead[]>('/integrations/leads').then((res) => res.data),
+  importCsv: (file: File, source: DealSource) => {
+    const form = new FormData();
+    form.append('file', file);
+    return api
+      .post<CsvImportResult>('/integrations/import/csv', form, { params: { source } })
+      .then((res) => res.data);
+  },
   regenerateNetlifySecret: () =>
     api.post<{ secret: string }>('/integrations/netlify/secret').then((res) => res.data.secret),
 };

@@ -32,6 +32,10 @@ API em [crm-vendas-backend](https://github.com/jessicaccl/crm-vendas-backend).
 |---|---|
 | ![Funil da Unic](docs/screenshots/09-funil-unic.png) | ![Lead do quiz](docs/screenshots/08-lead-do-quiz.png) |
 
+**Importação de planilha:** leads antigos do Netlify, Excel ou Google Sheets, com relatório do que entrou.
+
+![Importar CSV](docs/screenshots/11-importar-csv.png)
+
 | Clientes | Celular |
 |---|---|
 | ![Clientes](docs/screenshots/05-clientes.png) | <img src="docs/screenshots/06-celular.png" alt="Funil no celular" width="280"> |
@@ -50,6 +54,7 @@ API em [crm-vendas-backend](https://github.com/jessicaccl/crm-vendas-backend).
 - Cadastro e edição em modal, com validação no navegador e mensagens de erro vindas da API
 - **Multiempresa**: cada pessoa vê só os dados da própria organização; o nome da empresa aparece no menu
 - **Integrações**: endereço do webhook da organização, geração da chave secreta (mostrada uma vez) e últimos leads recebidos do quiz
+- **Importar planilha (CSV)**: escolha o arquivo e a origem dos leads; o resumo mostra o que foi importado, o que já existia e quais linhas foram ignoradas
 - Observações em cada negócio (os leads do quiz chegam com o resultado e o placar)
 - Estados de carregando, erro e lista vazia
 - Menu lateral recolhível e layout que funciona no celular

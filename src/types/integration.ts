@@ -6,6 +6,17 @@ export interface IntegrationStatus {
   netlifyWebhookPath: string;
 }
 
+export interface CsvImportResult {
+  rows: number;
+  imported: number;
+  newCustomers: number;
+  duplicates: number;
+  skipped: number;
+  issues: { line: number; message: string }[];
+  recognizedColumns: string[];
+  extraColumns: string[];
+}
+
 export interface InboundLead {
   id: number;
   provider: string;
