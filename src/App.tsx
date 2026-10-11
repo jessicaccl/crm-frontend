@@ -43,7 +43,7 @@ function App() {
           element={
             <ComingSoon
               title="Painel de resultados"
-              phase={5}
+              phase={6}
               items={[
                 'Receita ganha por mês',
                 'Conversão por etapa e origem dos negócios',
@@ -57,7 +57,7 @@ function App() {
           element={
             <ComingSoon
               title="Tarefas"
-              phase={6}
+              phase={7}
               items={['Follow-ups com data e responsável', 'Lembretes de negócios parados']}
             />
           }

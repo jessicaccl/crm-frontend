@@ -80,7 +80,7 @@ export const Sidebar = ({ isOpen, toggle }: SidebarProps) => {
           </span>
           <div className="userInfo">
             <span className="userName">{user.name}</span>
-            <span className="userEmail">{user.email}</span>
+            <span className="userEmail">{user.organization?.name ?? user.email}</span>
           </div>
           <button className="logoutBtn" onClick={logout} aria-label="Sair" title="Sair">
             <LogOut size={18} />

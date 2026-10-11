@@ -22,9 +22,15 @@ API em [crm-vendas-backend](https://github.com/jessicaccl/crm-vendas-backend).
 |---|---|
 | ![Login](docs/screenshots/01-login.png) | ![Editar negócio](docs/screenshots/04-editar-negocio.png) |
 
-| Integrações (leads do quiz) | Lead do quiz no funil |
+**Multiempresa:** a mesma tela, vista por duas organizações diferentes.
+
+| Unic Studio (dados reais) | Demo (dados fictícios) |
 |---|---|
-| ![Integrações](docs/screenshots/07-integracoes.png) | ![Lead do quiz](docs/screenshots/08-lead-do-quiz.png) |
+| ![Integrações da Unic](docs/screenshots/07-integracoes.png) | ![Integrações da Demo](docs/screenshots/10-integracoes-demo.png) |
+
+| Funil da Unic (só os leads dela) | Lead do quiz no funil |
+|---|---|
+| ![Funil da Unic](docs/screenshots/09-funil-unic.png) | ![Lead do quiz](docs/screenshots/08-lead-do-quiz.png) |
 
 | Clientes | Celular |
 |---|---|
@@ -42,7 +48,8 @@ API em [crm-vendas-backend](https://github.com/jessicaccl/crm-vendas-backend).
 - Cadastro, edição e exclusão de negócios
 - Lista de clientes com busca, filtro por status (Lead, Cliente, Inativo) e paginação
 - Cadastro e edição em modal, com validação no navegador e mensagens de erro vindas da API
-- **Integrações**: status do webhook do Netlify (endereço com botão de copiar) e últimos leads recebidos do quiz de diagnóstico
+- **Multiempresa**: cada pessoa vê só os dados da própria organização; o nome da empresa aparece no menu
+- **Integrações**: endereço do webhook da organização, geração da chave secreta (mostrada uma vez) e últimos leads recebidos do quiz
 - Observações em cada negócio (os leads do quiz chegam com o resultado e o placar)
 - Estados de carregando, erro e lista vazia
 - Menu lateral recolhível e layout que funciona no celular
@@ -90,6 +97,7 @@ src/
 - [x] Fase 1: base (rotas, CRUD de clientes, validação, estados de tela)
 - [x] Fase 2: funil Kanban com arrastar e soltar e indicadores
 - [x] Fase 3: login, CI, deploy e demo online
-- [x] Fase 4: tela de Integrações (leads do quiz via Netlify) e modo sem demo para o ambiente real
-- [ ] Fase 5: painel de resultados com gráficos
-- [ ] Fase 6: ficha do cliente com atividades e tarefas
+- [x] Fase 4: tela de Integrações (leads do quiz via Netlify)
+- [x] Fase 5: multiempresa (organização no menu, chave do webhook por empresa)
+- [ ] Fase 6: painel de resultados com gráficos
+- [ ] Fase 7: ficha do cliente com atividades e tarefas

@@ -52,6 +52,8 @@ export const dealsApi = {
 export const integrationsApi = {
   status: () => api.get<IntegrationStatus>('/integrations/status').then((res) => res.data),
   recentLeads: () => api.get<InboundLead[]>('/integrations/leads').then((res) => res.data),
+  regenerateNetlifySecret: () =>
+    api.post<{ secret: string }>('/integrations/netlify/secret').then((res) => res.data.secret),
 };
 
 /** Endereço público da API, sem o /api/v1 (ex.: para montar a URL do webhook). */

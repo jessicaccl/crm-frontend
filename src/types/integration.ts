@@ -1,5 +1,8 @@
 export interface IntegrationStatus {
-  netlifyEnabled: boolean;
+  /** Falso na organização de demonstração. */
+  available: boolean;
+  /** Já existe chave para o webhook do Netlify. */
+  netlifyConfigured: boolean;
   netlifyWebhookPath: string;
 }
 
