@@ -23,6 +23,7 @@ const schema = z
     source: z.union([z.literal(''), z.enum(['REFERRAL', 'INSTAGRAM', 'WEBSITE', 'WHATSAPP', 'OTHER'])]),
     expectedCloseDate: z.string(),
     lostReason: z.string().trim().max(255, 'Use no máximo 255 caracteres'),
+    notes: z.string().trim().max(2000, 'Use no máximo 2000 caracteres'),
   })
   .refine((data) => data.stage !== 'LOST' || data.lostReason.length > 0, {
     path: ['lostReason'],
@@ -65,10 +66,18 @@ export const DealFormModal = ({ deal, initialStage = 'PROSPECT', onClose }: Prop
       source: deal?.source ?? '',
       expectedCloseDate: deal?.expectedCloseDate ?? '',
       lostReason: deal?.lostReason ?? '',
+      notes: deal?.notes ?? '',
     },
   });
 
   const stage = useWatch({ control, name: 'stage' });
+
+  // Garante que o cliente do negócio aparece na lista mesmo se estiver fora dos primeiros 200
+  const customerOptions = customers.data
+    ? deal && !customers.data.content.some((customer) => customer.id === deal.customer.id)
+      ? [...customers.data.content, deal.customer]
+      : customers.data.content
+    : null;
 
   const onSubmit = handleSubmit((values) =>
     save.mutate(
@@ -82,6 +91,7 @@ export const DealFormModal = ({ deal, initialStage = 'PROSPECT', onClose }: Prop
           source: values.source === '' ? null : (values.source as DealSource),
           expectedCloseDate: values.expectedCloseDate || null,
           lostReason: values.stage === 'LOST' ? values.lostReason : null,
+          notes: values.notes || null,
         },
       },
       {
@@ -173,14 +183,21 @@ export const DealFormModal = ({ deal, initialStage = 'PROSPECT', onClose }: Prop
 
         <div className="formField formField--full">
           <label htmlFor={`${formId}-customerId`}>Cliente *</label>
-          <select {...register('customerId', { valueAsNumber: true })} {...field('customerId')}>
-            <option value="">{customers.isPending ? 'Carregando clientes…' : 'Escolha um cliente'}</option>
-            {customers.data?.content.map((customer) => (
-              <option key={customer.id} value={customer.id}>
-                {customer.company ? `${customer.company} · ${customer.name}` : customer.name}
-              </option>
-            ))}
-          </select>
+          {/* Só monta o campo depois que a lista chega; assim o cliente atual já vem selecionado */}
+          {customerOptions ? (
+            <select {...register('customerId', { valueAsNumber: true })} {...field('customerId')}>
+              <option value="">Escolha um cliente</option>
+              {customerOptions.map((customer) => (
+                <option key={customer.id} value={customer.id}>
+                  {customer.company ? `${customer.company} · ${customer.name}` : customer.name}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <select id={`${formId}-customerId`} disabled>
+              <option>{customers.isError ? 'Não foi possível carregar os clientes' : 'Carregando clientes…'}</option>
+            </select>
+          )}
           {errorText('customerId')}
         </div>
 
@@ -233,6 +250,17 @@ export const DealFormModal = ({ deal, initialStage = 'PROSPECT', onClose }: Prop
             {errorText('lostReason')}
           </div>
         )}
+
+        <div className="formField formField--full">
+          <label htmlFor={`${formId}-notes`}>Observações</label>
+          <textarea
+            {...register('notes')}
+            {...field('notes')}
+            rows={4}
+            placeholder="Contexto da negociação, próximos passos…"
+          />
+          {errorText('notes')}
+        </div>
       </form>
     </Modal>
   );

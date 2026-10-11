@@ -22,6 +22,10 @@ API em [crm-vendas-backend](https://github.com/jessicaccl/crm-vendas-backend).
 |---|---|
 | ![Login](docs/screenshots/01-login.png) | ![Editar negócio](docs/screenshots/04-editar-negocio.png) |
 
+| Integrações (leads do quiz) | Lead do quiz no funil |
+|---|---|
+| ![Integrações](docs/screenshots/07-integracoes.png) | ![Lead do quiz](docs/screenshots/08-lead-do-quiz.png) |
+
 | Clientes | Celular |
 |---|---|
 | ![Clientes](docs/screenshots/05-clientes.png) | <img src="docs/screenshots/06-celular.png" alt="Funil no celular" width="280"> |
@@ -38,6 +42,8 @@ API em [crm-vendas-backend](https://github.com/jessicaccl/crm-vendas-backend).
 - Cadastro, edição e exclusão de negócios
 - Lista de clientes com busca, filtro por status (Lead, Cliente, Inativo) e paginação
 - Cadastro e edição em modal, com validação no navegador e mensagens de erro vindas da API
+- **Integrações**: status do webhook do Netlify (endereço com botão de copiar) e últimos leads recebidos do quiz de diagnóstico
+- Observações em cada negócio (os leads do quiz chegam com o resultado e o placar)
 - Estados de carregando, erro e lista vazia
 - Menu lateral recolhível e layout que funciona no celular
 
@@ -59,6 +65,11 @@ Abra http://localhost:5173 e clique em **Entrar como demo** (`demo@crmpro.dev` /
 2. Em Environment Variables, defina `VITE_API_URL` com o endereço da API no Render, terminando em `/api/v1`.
 3. Deploy. O `vercel.json` faz as rotas do React (ex.: `/funil`) funcionarem ao recarregar a página.
 
+| Variável | Para quê |
+|---|---|
+| `VITE_API_URL` | endereço da API, terminando em `/api/v1` |
+| `VITE_DEMO_MODE` | `false` no ambiente real: esconde o acesso de demonstração da tela de login |
+
 Guia completo com prints (banco, API e frontend): [DEPLOY.md no repositório do backend](https://github.com/jessicaccl/crm-vendas-backend/blob/main/docs/DEPLOY.md).
 
 ## Estrutura
@@ -79,5 +90,6 @@ src/
 - [x] Fase 1: base (rotas, CRUD de clientes, validação, estados de tela)
 - [x] Fase 2: funil Kanban com arrastar e soltar e indicadores
 - [x] Fase 3: login, CI, deploy e demo online
-- [ ] Fase 4: painel de resultados com gráficos
-- [ ] Fase 5: ficha do cliente com atividades, tarefas e integrações
+- [x] Fase 4: tela de Integrações (leads do quiz via Netlify) e modo sem demo para o ambiente real
+- [ ] Fase 5: painel de resultados com gráficos
+- [ ] Fase 6: ficha do cliente com atividades e tarefas
