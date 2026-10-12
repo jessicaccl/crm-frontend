@@ -4,6 +4,8 @@ import type { Customer, CustomerFilters, CustomerInput } from '../types/customer
 import type { Deal, DealInput, DealSource, DealStage, SummaryReport } from '../types/deal';
 import type { LoginResponse } from '../types/auth';
 import type { CsvImportResult, InboundLead, IntegrationStatus } from '../types/integration';
+import type { ActivityInput, TimelineItem } from '../types/activity';
+import type { Task, TaskFilters, TaskInput } from '../types/task';
 import { getToken, SESSION_EXPIRED_EVENT } from './session';
 
 const api = axios.create({
@@ -33,11 +35,28 @@ export const authApi = {
 export const customersApi = {
   list: (filters: CustomerFilters) =>
     api.get<Page<Customer>>('/customers', { params: filters }).then((res) => res.data),
+  get: (id: number) => api.get<Customer>(`/customers/${id}`).then((res) => res.data),
   create: (data: CustomerInput) =>
     api.post<Customer>('/customers', data).then((res) => res.data),
   update: (id: number, data: CustomerInput) =>
     api.put<Customer>(`/customers/${id}`, data).then((res) => res.data),
   remove: (id: number) => api.delete(`/customers/${id}`),
+};
+
+export const activitiesApi = {
+  timeline: (customerId: number) =>
+    api.get<TimelineItem[]>(`/customers/${customerId}/timeline`).then((res) => res.data),
+  create: (customerId: number, data: ActivityInput) =>
+    api.post<TimelineItem>(`/customers/${customerId}/activities`, data).then((res) => res.data),
+  remove: (id: number) => api.delete(`/activities/${id}`),
+};
+
+export const tasksApi = {
+  list: (filters: TaskFilters) => api.get<Task[]>('/tasks', { params: filters }).then((res) => res.data),
+  create: (data: TaskInput) => api.post<Task>('/tasks', data).then((res) => res.data),
+  update: (id: number, data: TaskInput) => api.put<Task>(`/tasks/${id}`, data).then((res) => res.data),
+  setDone: (id: number, done: boolean) => api.patch<Task>(`/tasks/${id}/done`, { done }).then((res) => res.data),
+  remove: (id: number) => api.delete(`/tasks/${id}`),
 };
 
 export const dealsApi = {

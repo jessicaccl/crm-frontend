@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { toast } from 'sonner';
 import { LoaderCircle, Trash2 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router';
 import { Modal } from '../Modal';
 import { Button } from '../Button';
 import { ConfirmDialog } from '../ConfirmDialog';
@@ -35,10 +36,12 @@ type FormValues = z.infer<typeof schema>;
 interface Props {
   deal?: Deal;
   initialStage?: DealStage;
+  /** Cliente já escolhido ao criar a partir da ficha dele. */
+  initialCustomerId?: number;
   onClose: () => void;
 }
 
-export const DealFormModal = ({ deal, initialStage = 'PROSPECT', onClose }: Props) => {
+export const DealFormModal = ({ deal, initialStage = 'PROSPECT', initialCustomerId, onClose }: Props) => {
   const formId = useId();
   const save = useSaveDeal();
   const remove = useDeleteDeal();
@@ -60,7 +63,7 @@ export const DealFormModal = ({ deal, initialStage = 'PROSPECT', onClose }: Prop
     resolver: zodResolver(schema),
     defaultValues: {
       title: deal?.title ?? '',
-      customerId: deal?.customer.id ?? Number.NaN,
+      customerId: deal?.customer.id ?? initialCustomerId ?? Number.NaN,
       value: deal?.value ?? Number.NaN,
       stage: deal?.stage ?? initialStage,
       source: deal?.source ?? '',
@@ -159,11 +162,17 @@ export const DealFormModal = ({ deal, initialStage = 'PROSPECT', onClose }: Prop
       footer={
         <>
           {isEditing && (
-            <Button variant="ghost" onClick={() => setConfirmDelete(true)} style={{ marginRight: 'auto' }}>
+            <Button variant="ghost" onClick={() => setConfirmDelete(true)}>
               <Trash2 size={16} />
               Excluir
             </Button>
           )}
+          {deal && !initialCustomerId && (
+            <Link to={`/clientes/${deal.customer.id}`} className="dealCustomerLink" onClick={onClose}>
+              Ver ficha do cliente
+            </Link>
+          )}
+          <span style={{ marginRight: 'auto' }} />
           <Button variant="secondary" onClick={onClose}>
             Cancelar
           </Button>

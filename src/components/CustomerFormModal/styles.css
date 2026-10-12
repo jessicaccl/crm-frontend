@@ -53,6 +53,19 @@
   box-shadow: 0 0 0 3px var(--danger-soft);
 }
 
+.dealCustomerLink {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--primary-hover);
+  text-decoration: none;
+  align-self: center;
+  padding: 0 0.4rem;
+}
+
+.dealCustomerLink:hover {
+  text-decoration: underline;
+}
+
 .fieldError {
   font-size: 0.78rem;
   color: #b91c1c;

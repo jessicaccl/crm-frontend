@@ -1,12 +1,16 @@
 import type { HTMLAttributes, Ref } from 'react';
+import { CalendarClock } from 'lucide-react';
 import type { Deal } from '../../types/deal';
-import { daysSince, daysUntil, formatCurrency, formatShortDate } from '../../utils/format';
+import { taskBucket, type Task } from '../../types/task';
+import { daysSince, daysUntil, formatCurrency, formatDueShort, formatShortDate } from '../../utils/format';
 import './styles.css';
 
 export const STALLED_DAYS = 7;
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   deal: Deal;
+  /** Próxima tarefa pendente do negócio, se houver. */
+  nextTask?: Task;
   isDragging?: boolean;
   isOverlay?: boolean;
   ref?: Ref<HTMLDivElement>;
@@ -35,8 +39,9 @@ function statusLine(deal: Deal): { text: string; late?: boolean } {
   return { text: `${days} ${days === 1 ? 'dia' : 'dias'} nesta etapa` };
 }
 
-export const DealCard = ({ deal, isDragging, isOverlay, ref, className = '', ...rest }: Props) => {
+export const DealCard = ({ deal, nextTask, isDragging, isOverlay, ref, className = '', ...rest }: Props) => {
   const status = statusLine(deal);
+  const taskOverdue = nextTask ? taskBucket(nextTask) === 'overdue' : false;
 
   return (
     <div
@@ -59,6 +64,12 @@ export const DealCard = ({ deal, isDragging, isOverlay, ref, className = '', ...
       >
         {status.text}
       </span>
+      {nextTask && (
+        <span className={`dealTask ${taskOverdue ? 'dealTask--overdue' : ''}`} title={nextTask.title}>
+          <CalendarClock size={12} />
+          {taskOverdue ? 'Atrasada' : formatDueShort(nextTask.dueAt)} · {nextTask.title}
+        </span>
+      )}
     </div>
   );
 };
