@@ -87,6 +87,32 @@
   color: #15803d;
 }
 
+.dealTask {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  color: #1e40af;
+  background: #eff6ff;
+  border-radius: 6px;
+  padding: 0.2rem 0.4rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.dealTask svg {
+  vertical-align: -2px;
+  margin-right: 0.25rem;
+}
+
+.dealTask--overdue {
+  color: #991b1b;
+  background: #fee2e2;
+  font-weight: 600;
+}
+
 .dealStatus--lost {
   align-self: flex-start;
   background: #fee2e2;

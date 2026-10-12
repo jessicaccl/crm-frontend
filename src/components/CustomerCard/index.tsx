@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import { Building2, Mail, Pencil, Phone, Trash2 } from 'lucide-react';
 import { type Customer } from '../../types/customer';
 import { Button } from '../Button';
@@ -23,7 +24,11 @@ export const CustomerCard = ({ customer, onEdit, onDelete }: Props) => {
       <header className="cardHeader">
         <span className="avatar" aria-hidden="true">{initials(customer.name)}</span>
         <div className="cardTitle">
-          <h3>{customer.name}</h3>
+          <h3>
+            <Link to={`/clientes/${customer.id}`} className="cardNameLink">
+              {customer.name}
+            </Link>
+          </h3>
           {customer.company && (
             <p className="cardCompany">
               <Building2 size={13} /> {customer.company}

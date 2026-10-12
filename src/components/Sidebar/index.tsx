@@ -12,6 +12,8 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { useAuth } from '../../context/auth-context';
+import { useTasks } from '../../hooks/useTasks';
+import { taskBucket } from '../../types/task';
 import './styles.css';
 
 interface SidebarProps {
@@ -39,6 +41,9 @@ const secondaryItems: NavItem[] = [
 
 export const Sidebar = ({ isOpen, toggle }: SidebarProps) => {
   const { user, logout } = useAuth();
+  const pendingTasks = useTasks({ done: false });
+  // Atrasadas + de hoje: o que pede atenção agora
+  const dueNow = (pendingTasks.data ?? []).filter((task) => taskBucket(task) !== 'upcoming').length;
 
   const renderItem = ({ to, label, icon: Icon }: NavItem) => (
     <NavLink
@@ -49,6 +54,11 @@ export const Sidebar = ({ isOpen, toggle }: SidebarProps) => {
     >
       <Icon size={20} style={{ minWidth: '20px' }} />
       <span className="navText">{label}</span>
+      {to === '/tarefas' && dueNow > 0 && (
+        <span className="navBadge" aria-label={`${dueNow} tarefas para agora`}>
+          {dueNow}
+        </span>
+      )}
     </NavLink>
   );
 

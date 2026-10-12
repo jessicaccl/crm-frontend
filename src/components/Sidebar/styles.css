@@ -73,6 +73,33 @@
   color: #ffffff;
 }
 
+.navItem {
+  position: relative;
+}
+
+.navBadge {
+  margin-left: auto;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  padding: 0 0.35rem;
+}
+
+.sidebarClosed .navBadge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 16px;
+  height: 16px;
+  font-size: 0.6rem;
+}
+
 .navSeparator {
   height: 1px;
   background: #1f2937;

@@ -42,5 +42,51 @@ export function daysUntil(date: string) {
   return Math.round((parseLocalDate(date).getTime() - today.getTime()) / DAY_MS);
 }
 
-export const plural = (count: number, singular: string, pluralForm: string) =>
+const timeOnly = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' });
+const weekdayDate = new Intl.DateTimeFormat('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit' });
+const fullDateTime = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+
+/** "Hoje, 17:00", "Amanhã, 10:00", "Ontem, 15:00" ou "qui., 16/10, 10:00". */
+export function formatDue(iso: string) {
+  const date = new Date(iso);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const day = new Date(date);
+  day.setHours(0, 0, 0, 0);
+  const diff = Math.round((day.getTime() - today.getTime()) / DAY_MS);
+  const time = timeOnly.format(date);
+  if (diff === 0) return `Hoje, ${time}`;
+  if (diff === 1) return `Amanhã, ${time}`;
+  if (diff === -1) return `Ontem, ${time}`;
+  return `${weekdayDate.format(date)}, ${time}`;
+}
+
+/** Versão curta para espaços pequenos: "Hoje", "Amanhã", "Ontem" ou "16/10". */
+export function formatDueShort(iso: string) {
+  const full = formatDue(iso);
+  if (full.startsWith('Hoje') || full.startsWith('Amanhã') || full.startsWith('Ontem')) return full.split(',')[0];
+  return shortDate.format(new Date(iso));
+}
+
+/** 11/10/2026 14:30 */
+export const formatDateTime = (iso: string) => fullDateTime.format(new Date(iso));
+
+/** Valores para inputs date/time a partir de um instante ISO (no horário local). */
+export function toDateTimeInputs(iso: string) {
+  const date = new Date(iso);
+  const pad = (value: number) => String(value).padStart(2, '0');
+  return {
+    date: `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`,
+    time: `${pad(date.getHours())}:${pad(date.getMinutes())}`,
+  };
+}
+
+/** Junta os inputs date ("2026-10-16") e time ("14:00") num instante ISO, no horário local. */
+export function fromDateTimeInputs(date: string, time: string) {
+  const [year, month, day] = date.split('-').map(Number);
+  const [hours, minutes] = (time || '09:00').split(':').map(Number);
+  return new Date(year, month - 1, day, hours, minutes).toISOString();
+}
+
+export const plural =(count: number, singular: string, pluralForm: string) =>
   `${count} ${count === 1 ? singular : pluralForm}`;

@@ -7,6 +7,8 @@ import { Pipeline } from './pages/Pipeline';
 import { Login } from './pages/Login';
 import { Settings } from './pages/Settings';
 import { Integrations } from './pages/Integrations';
+import { CustomerDetail } from './pages/CustomerDetail';
+import { Tasks } from './pages/Tasks';
 import { ComingSoon } from './pages/ComingSoon';
 import './App.css';
 
@@ -52,16 +54,8 @@ function App() {
             />
           }
         />
-        <Route
-          path="/tarefas"
-          element={
-            <ComingSoon
-              title="Tarefas"
-              phase={7}
-              items={['Follow-ups com data e responsável', 'Lembretes de negócios parados']}
-            />
-          }
-        />
+        <Route path="/clientes/:id" element={<CustomerDetail />} />
+        <Route path="/tarefas" element={<Tasks />} />
         <Route path="/integracoes" element={<Integrations />} />
         <Route path="/configuracoes" element={<Settings />} />
         <Route path="*" element={<Navigate to="/funil" replace />} />

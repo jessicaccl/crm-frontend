@@ -19,6 +19,8 @@ import { DealFormModal } from '../../components/DealFormModal';
 import { KpiStrip } from '../../components/KpiStrip';
 import { LostReasonModal } from '../../components/LostReasonModal';
 import { useDeals, useMoveDeal } from '../../hooks/useDeals';
+import { useTasks } from '../../hooks/useTasks';
+import type { Task } from '../../types/task';
 import { getErrorMessage } from '../../services/api';
 import { stageLabels, stageOrder, type Deal, type DealStage } from '../../types/deal';
 import { formatCompactCurrency } from '../../utils/format';
@@ -27,13 +29,14 @@ import './styles.css';
 
 type FormTarget = { deal?: Deal; stage?: DealStage } | null;
 
-const DraggableDeal = ({ deal, onOpen }: { deal: Deal; onOpen: (deal: Deal) => void }) => {
+const DraggableDeal = ({ deal, nextTask, onOpen }: { deal: Deal; nextTask?: Task; onOpen: (deal: Deal) => void }) => {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({ id: deal.id, data: { deal } });
 
   return (
     <DealCard
       ref={setNodeRef}
       deal={deal}
+      nextTask={nextTask}
       isDragging={isDragging}
       onClick={() => onOpen(deal)}
       onKeyDown={(event) => {
@@ -52,11 +55,13 @@ const DraggableDeal = ({ deal, onOpen }: { deal: Deal; onOpen: (deal: Deal) => v
 const StageColumn = ({
   stage,
   deals,
+  nextTasks,
   onOpen,
   onAdd,
 }: {
   stage: DealStage;
   deals: Deal[];
+  nextTasks: Map<number, Task>;
   onOpen: (deal: Deal) => void;
   onAdd: (stage: DealStage) => void;
 }) => {
@@ -75,7 +80,7 @@ const StageColumn = ({
       <div className="stageBar" />
       <div className="stageCards">
         {deals.map((deal) => (
-          <DraggableDeal key={deal.id} deal={deal} onOpen={onOpen} />
+          <DraggableDeal key={deal.id} deal={deal} nextTask={nextTasks.get(deal.id)} onOpen={onOpen} />
         ))}
         {deals.length === 0 && <p className="stageEmpty">Arraste negócios para cá</p>}
       </div>
@@ -91,6 +96,15 @@ const StageColumn = ({
 export const Pipeline = () => {
   const { data: deals, isPending, isError, error, refetch, isFetching } = useDeals();
   const moveDeal = useMoveDeal();
+  const pendingTasks = useTasks({ done: false });
+  // Próxima tarefa de cada negócio (a lista já vem ordenada pelo prazo)
+  const nextTasks = useMemo(() => {
+    const map = new Map<number, Task>();
+    (pendingTasks.data ?? []).forEach((task) => {
+      if (task.deal && !map.has(task.deal.id)) map.set(task.deal.id, task);
+    });
+    return map;
+  }, [pendingTasks.data]);
   const [search, setSearch] = useState('');
   const [activeDeal, setActiveDeal] = useState<Deal | null>(null);
   const [pendingLost, setPendingLost] = useState<Deal | null>(null);
@@ -206,6 +220,7 @@ export const Pipeline = () => {
                 key={stage}
                 stage={stage}
                 deals={columns[stage]}
+                nextTasks={nextTasks}
                 onOpen={(deal) => setFormTarget({ deal })}
                 onAdd={(initial) => setFormTarget({ stage: initial })}
               />

@@ -46,6 +46,32 @@
   overflow-wrap: anywhere;
 }
 
+.cardNameLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cardNameLink:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+/* O card inteiro abre a ficha; os botões de editar e excluir ficam por cima */
+.cardNameLink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.card {
+  position: relative;
+}
+
+.cardActions {
+  position: relative;
+  z-index: 1;
+}
+
 .cardCompany {
   display: flex;
   align-items: center;
