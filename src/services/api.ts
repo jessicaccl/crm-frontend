@@ -5,6 +5,7 @@ import type { Deal, DealInput, DealSource, DealStage, SummaryReport } from '../t
 import type { LoginResponse } from '../types/auth';
 import type { CsvImportResult, InboundLead, IntegrationStatus } from '../types/integration';
 import type { ActivityInput, TimelineItem } from '../types/activity';
+import type { Dashboard } from '../types/dashboard';
 import type { Task, TaskFilters, TaskInput } from '../types/task';
 import { getToken, SESSION_EXPIRED_EVENT } from './session';
 
@@ -87,6 +88,7 @@ export const API_ORIGIN = (import.meta.env.VITE_API_URL ?? 'http://localhost:808
 
 export const reportsApi = {
   summary: () => api.get<SummaryReport>('/reports/summary').then((res) => res.data),
+  dashboard: () => api.get<Dashboard>('/reports/dashboard').then((res) => res.data),
 };
 
 export function getProblem(error: unknown): ProblemDetail | null {

@@ -22,12 +22,15 @@ import { useDeals, useMoveDeal } from '../../hooks/useDeals';
 import { useTasks } from '../../hooks/useTasks';
 import type { Task } from '../../types/task';
 import { getErrorMessage } from '../../services/api';
-import { stageLabels, stageOrder, type Deal, type DealStage } from '../../types/deal';
+import { isOpenStage, stageLabels, stageOrder, type Deal, type DealStage } from '../../types/deal';
 import { formatCompactCurrency } from '../../utils/format';
 import '../Customers/styles.css';
 import './styles.css';
 
 type FormTarget = { deal?: Deal; stage?: DealStage } | null;
+
+/** Quantos dias de negócios ganhos/perdidos ficam visíveis no quadro. */
+const CLOSED_WINDOW_DAYS = 30;
 
 const DraggableDeal = ({ deal, nextTask, onOpen }: { deal: Deal; nextTask?: Task; onOpen: (deal: Deal) => void }) => {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({ id: deal.id, data: { deal } });
@@ -78,6 +81,9 @@ const StageColumn = ({
         </span>
       </header>
       <div className="stageBar" />
+      {(stage === 'WON' || stage === 'LOST') && (
+        <span className="stageWindow">últimos {CLOSED_WINDOW_DAYS} dias</span>
+      )}
       <div className="stageCards">
         {deals.map((deal) => (
           <DraggableDeal key={deal.id} deal={deal} nextTask={nextTasks.get(deal.id)} onOpen={onOpen} />
@@ -106,6 +112,8 @@ export const Pipeline = () => {
     return map;
   }, [pendingTasks.data]);
   const [search, setSearch] = useState('');
+  // Ganhos e perdidos antigos saem do quadro (o histórico completo fica no Painel); calculado ao abrir a tela
+  const [closedCutoff] = useState(() => Date.now() - CLOSED_WINDOW_DAYS * 86_400_000);
   const [activeDeal, setActiveDeal] = useState<Deal | null>(null);
   const [pendingLost, setPendingLost] = useState<Deal | null>(null);
   const [formTarget, setFormTarget] = useState<FormTarget>(null);
@@ -120,15 +128,16 @@ export const Pipeline = () => {
     const text = search.trim().toLowerCase();
     const visible = (deals ?? []).filter(
       (deal) =>
-        !text ||
+        (isOpenStage(deal.stage) || new Date(deal.closedAt ?? deal.stageChangedAt).getTime() >= closedCutoff) &&
+        (!text ||
         deal.title.toLowerCase().includes(text) ||
         deal.customer.name.toLowerCase().includes(text) ||
-        (deal.customer.company ?? '').toLowerCase().includes(text),
+        (deal.customer.company ?? '').toLowerCase().includes(text)),
     );
     return Object.fromEntries(
       stageOrder.map((stage) => [stage, visible.filter((deal) => deal.stage === stage)]),
     ) as Record<DealStage, Deal[]>;
-  }, [deals, search]);
+  }, [deals, search, closedCutoff]);
 
   const move = (deal: Deal, stage: DealStage, lostReason?: string) =>
     moveDeal.mutate(

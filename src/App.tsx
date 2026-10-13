@@ -9,7 +9,7 @@ import { Settings } from './pages/Settings';
 import { Integrations } from './pages/Integrations';
 import { CustomerDetail } from './pages/CustomerDetail';
 import { Tasks } from './pages/Tasks';
-import { ComingSoon } from './pages/ComingSoon';
+import { Dashboard } from './pages/Dashboard';
 import './App.css';
 
 /** Estrutura das telas internas: menu lateral + conteúdo. */
@@ -40,20 +40,7 @@ function App() {
         <Route path="/" element={<Navigate to="/funil" replace />} />
         <Route path="/funil" element={<Pipeline />} />
         <Route path="/clientes" element={<Customers />} />
-        <Route
-          path="/painel"
-          element={
-            <ComingSoon
-              title="Painel de resultados"
-              phase={6}
-              items={[
-                'Receita ganha por mês',
-                'Conversão por etapa e origem dos negócios',
-                'Previsão de receita ponderada por etapa',
-              ]}
-            />
-          }
-        />
+        <Route path="/painel" element={<Dashboard />} />
         <Route path="/clientes/:id" element={<CustomerDetail />} />
         <Route path="/tarefas" element={<Tasks />} />
         <Route path="/integracoes" element={<Integrations />} />

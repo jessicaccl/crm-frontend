@@ -2,11 +2,11 @@
 
 [![CI](https://github.com/jessicaccl/crm-frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/jessicaccl/crm-frontend/actions/workflows/ci.yml)
 
-Interface do CRM de vendas: clientes, funil Kanban, painel de resultados e integrações.
+CRM de vendas multiempresa para pequenos negócios: funil Kanban, ficha do cliente com histórico e tarefas,
+painel de resultados e leads entrando sozinhos a partir do site.
 API em [crm-vendas-backend](https://github.com/jessicaccl/crm-vendas-backend).
 
 **Demo online:** https://crm-pro-jessica.vercel.app (clique em "Entrar como demo")
-*(plano gratuito: o primeiro acesso pode levar até 1 minuto enquanto o servidor acorda)*
 
 ![Arrastando um negócio até Ganho](docs/screenshots/funil-arrastar.gif)
 
@@ -14,50 +14,60 @@ API em [crm-vendas-backend](https://github.com/jessicaccl/crm-vendas-backend).
 
 ## Telas
 
-| Funil de vendas | Motivo da perda |
+| Funil de vendas | Painel de resultados |
 |---|---|
-| ![Funil](docs/screenshots/02-funil.png) | ![Motivo da perda](docs/screenshots/03-motivo-perda.png) |
+| ![Funil](docs/screenshots/02-funil.png) | ![Painel](docs/screenshots/15-painel.png) |
 
-| Login | Editar negócio |
+| Ficha do cliente | Tarefas |
 |---|---|
-| ![Login](docs/screenshots/01-login.png) | ![Editar negócio](docs/screenshots/04-editar-negocio.png) |
+| ![Ficha do cliente](docs/screenshots/13-ficha-do-cliente.png) | ![Tarefas](docs/screenshots/14-tarefas.png) |
 
-**Multiempresa:** a mesma tela, vista por duas organizações diferentes.
+| Motivo da perda | Editar negócio |
+|---|---|
+| ![Motivo da perda](docs/screenshots/03-motivo-perda.png) | ![Editar negócio](docs/screenshots/04-editar-negocio.png) |
+
+**Multiempresa:** a mesma tela vista por duas organizações diferentes.
 
 | Unic Studio (dados reais) | Demo (dados fictícios) |
 |---|---|
 | ![Integrações da Unic](docs/screenshots/07-integracoes.png) | ![Integrações da Demo](docs/screenshots/10-integracoes-demo.png) |
 
-| Funil da Unic (só os leads dela) | Lead do quiz no funil |
+| Lead do quiz no funil | Importação de planilha |
 |---|---|
-| ![Funil da Unic](docs/screenshots/09-funil-unic.png) | ![Lead do quiz](docs/screenshots/08-lead-do-quiz.png) |
+| ![Lead do quiz](docs/screenshots/08-lead-do-quiz.png) | ![Importar CSV](docs/screenshots/11-importar-csv.png) |
 
-**Importação de planilha:** leads antigos do Netlify, Excel ou Google Sheets, com relatório do que entrou.
-
-![Importar CSV](docs/screenshots/11-importar-csv.png)
-
-| Clientes | Celular |
+| Login | Celular |
 |---|---|
-| ![Clientes](docs/screenshots/05-clientes.png) | <img src="docs/screenshots/06-celular.png" alt="Funil no celular" width="280"> |
+| ![Login](docs/screenshots/01-login.png) | <img src="docs/screenshots/06-celular.png" alt="Funil no celular" width="280"> |
 
-## O que já funciona
+## Funcionalidades
 
-- **Login** com token JWT, acesso de demonstração em um clique e aviso quando o servidor gratuito está "acordando"
-- Sessão expirada leva de volta ao login, sem perder a página que você tentou abrir
-- **Funil Kanban**: arrastar e soltar negócios entre Prospecto, Qualificado, Proposta, Ganho e Perdido (mouse, toque e teclado)
-- Atualização otimista: o card muda na hora e volta sozinho se a API recusar
-- Ao soltar em "Perdido", o sistema pede o motivo da perda
-- Indicadores no topo: valor em aberto, ganho no mês vs mês anterior, taxa de conversão e negócios parados
-- Cards sinalizam negócios parados há 7+ dias e previsões de fechamento vencendo
-- Cadastro, edição e exclusão de negócios
-- Lista de clientes com busca, filtro por status (Lead, Cliente, Inativo) e paginação
-- Cadastro e edição em modal, com validação no navegador e mensagens de erro vindas da API
-- **Multiempresa**: cada pessoa vê só os dados da própria organização; o nome da empresa aparece no menu
-- **Integrações**: endereço do webhook da organização, geração da chave secreta (mostrada uma vez) e últimos leads recebidos do quiz
-- **Importar planilha (CSV)**: escolha o arquivo e a origem dos leads; o resumo mostra o que foi importado, o que já existia e quais linhas foram ignoradas
-- Observações em cada negócio (os leads do quiz chegam com o resultado e o placar)
-- Estados de carregando, erro e lista vazia
-- Menu lateral recolhível e layout que funciona no celular
+**Funil e negócios**
+- Kanban com arrastar e soltar (mouse, toque e teclado) e atualização otimista: o card muda na hora e volta se a API recusar
+- Ao soltar em "Perdido", o sistema pede o motivo; Ganho e Perdido mostram os últimos 30 dias
+- Indicadores no topo: em aberto, ganho no mês vs anterior, conversão e negócios parados
+- Cards sinalizam negócio parado, previsão de fechamento vencendo e a próxima tarefa (em vermelho se atrasada)
+
+**Clientes**
+- Lista com busca, filtro por status e paginação
+- Ficha do cliente: contatos (com atalho para o WhatsApp), negócios, tarefas e **linha do tempo**
+  com anotações, ligações, mensagens, mudanças de etapa, leads recebidos e tarefas concluídas
+
+**Tarefas**
+- Atrasadas, hoje e próximas; contador no menu; ligadas ao cliente e ao negócio
+
+**Painel de resultados**
+- Receita por mês, funil de conversão, origem dos negócios, previsão ponderada por etapa,
+  ciclo médio de venda, ticket médio, motivos de perda e negócios parados (gráficos em SVG, sem biblioteca)
+
+**Integrações**
+- Webhook do Netlify Forms: endereço e chave secreta por organização, leads recebidos na hora
+- Importação de planilha CSV (export do Netlify, Excel, Google Sheets) com relatório do que entrou
+
+**Conta**
+- Login com JWT, acesso de demonstração em um clique, aviso quando o servidor gratuito está "acordando"
+- Multiempresa: cada pessoa vê só os dados da própria organização
+- Layout responsivo; estados de carregando, erro e vazio em todas as telas
 
 ## Como rodar
 
@@ -74,27 +84,24 @@ Abra http://localhost:5173 e clique em **Entrar como demo** (`demo@crmpro.dev` /
 ## Deploy na Vercel
 
 1. Em [vercel.com](https://vercel.com): Add New → Project → importe este repositório (o Vite é detectado sozinho).
-2. Em Environment Variables, defina `VITE_API_URL` com o endereço da API no Render, terminando em `/api/v1`.
+2. Defina `VITE_API_URL` com o endereço da API, terminando em `/api/v1`.
 3. Deploy. O `vercel.json` faz as rotas do React (ex.: `/funil`) funcionarem ao recarregar a página.
 
-| Variável | Para quê |
-|---|---|
-| `VITE_API_URL` | endereço da API, terminando em `/api/v1` |
-| `VITE_DEMO_MODE` | `false` no ambiente real: esconde o acesso de demonstração da tela de login |
-
-Guia completo com prints (banco, API e frontend): [DEPLOY.md no repositório do backend](https://github.com/jessicaccl/crm-vendas-backend/blob/main/docs/DEPLOY.md).
+Guia completo com prints (banco, API e frontend):
+[DEPLOY.md no repositório do backend](https://github.com/jessicaccl/crm-vendas-backend/blob/main/docs/DEPLOY.md).
 
 ## Estrutura
 
 ```
 src/
-  components/   Button, Modal, Sidebar, KpiStrip, DealCard, DealFormModal, LostReasonModal, CustomerCard...
+  components/   Sidebar, KpiStrip, DealCard, DealFormModal, TaskFormModal, TaskItem, CsvImportCard...
   context/      sessão do usuário (AuthProvider)
-  pages/        Pipeline (funil), Customers, Login, Settings e páginas das próximas fases
-  hooks/        useDeals (com atualização otimista ao arrastar), useCustomers, useDebouncedValue
-  utils/        formatação de moeda e datas
+  pages/        Pipeline (funil), Dashboard (painel), Customers, CustomerDetail (ficha),
+                Tasks, Integrations, Login, Settings
+  hooks/        useDeals (atualização otimista), useTasks, useCustomers, useDebouncedValue
   services/     cliente HTTP (axios), token e leitura de erros da API
   types/        tipos compartilhados com o contrato da API
+  utils/        formatação de moeda e datas
 ```
 
 ## Roteiro
@@ -102,7 +109,7 @@ src/
 - [x] Fase 1: base (rotas, CRUD de clientes, validação, estados de tela)
 - [x] Fase 2: funil Kanban com arrastar e soltar e indicadores
 - [x] Fase 3: login, CI, deploy e demo online
-- [x] Fase 4: tela de Integrações (leads do quiz via Netlify)
-- [x] Fase 5: multiempresa (organização no menu, chave do webhook por empresa)
-- [ ] Fase 6: painel de resultados com gráficos
-- [ ] Fase 7: ficha do cliente com atividades e tarefas
+- [x] Fase 4: leads do quiz via Netlify e importação de planilha
+- [x] Fase 5: multiempresa
+- [x] Fase 6: painel de resultados
+- [x] Fase 7: ficha do cliente, linha do tempo e tarefas
