@@ -1,0 +1,203 @@
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+.dashCard {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.dashCard--wide {
+  grid-column: 1 / -1;
+}
+
+.dashCard h2 {
+  font-size: 1rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.dashCard h2 span {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.dashEmpty {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+.dashHint {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+}
+
+/* Receita por mês */
+.revenueChart {
+  width: 100%;
+  height: auto;
+  font-family: inherit;
+}
+
+.revenueChart .gridLine {
+  stroke: #eef2f7;
+  stroke-width: 1;
+}
+
+.revenueChart .axisLabel {
+  font-size: 12px;
+  fill: var(--text-secondary);
+}
+
+.revenueChart .bar {
+  fill: #93c5fd;
+}
+
+.revenueChart .barCurrent {
+  fill: var(--primary);
+}
+
+.revenueChart .barValue {
+  font-size: 12px;
+  font-weight: 600;
+  fill: var(--text-main);
+}
+
+/* Funil */
+.funnelList,
+.sourceList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.funnelList li,
+.sourceList li {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.funnelTrack,
+.sourceTrack {
+  height: 12px;
+  background: #eef2f7;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.funnelBar,
+.sourceBar {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--primary);
+}
+
+.funnelBar--PROSPECT { background: #60a5fa; }
+.funnelBar--QUALIFIED { background: #f59e0b; }
+.funnelBar--PROPOSAL { background: #f97316; }
+.funnelBar--WON { background: #22c55e; }
+
+.funnelNumbers,
+.sourceNumbers {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  text-align: right;
+  min-width: 70px;
+}
+
+.funnelNumbers strong {
+  color: var(--text-main);
+}
+
+.sourceNumbers small {
+  display: block;
+  font-size: 0.72rem;
+  color: #15803d;
+  font-weight: 600;
+}
+
+.sourceBar {
+  background: #6366f1;
+}
+
+.lostBar {
+  background: #f87171;
+}
+
+.lostLabel {
+  overflow-wrap: anywhere;
+}
+
+.sourceList li:has(.lostLabel) {
+  grid-template-columns: 170px minmax(0, 1fr) auto;
+}
+
+/* Tabelas */
+.tableWrap {
+  overflow-x: auto;
+}
+
+.forecastTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.forecastTable th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 0.45rem 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.forecastTable td {
+  padding: 0.55rem 0.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.forecastTable td small {
+  color: var(--text-secondary);
+}
+
+.forecastTable a {
+  color: var(--primary-hover);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.stalledDays {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+@media (max-width: 960px) {
+  .dashboardGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .sourceList li:has(.lostLabel) {
+    grid-template-columns: 120px minmax(0, 1fr) auto;
+  }
+}
